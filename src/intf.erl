@@ -39,10 +39,5 @@ list(Intf) ->
 	lists:map(fun({Name,_,_}) -> Name end, Intf).
 
 broadcast(Message, Intf) ->
-    Names = list(Intf),
-	  lists:map(fun(Name) -> Name ! Message end, Names),
+	  lists:map(fun({_Name,  _,Reg}) -> Reg ! Message end, Intf),
     ok.
-
-%% private functions
-send(Msg, {ok, Destination}) ->
-    Destination ! Msg.

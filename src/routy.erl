@@ -1,9 +1,9 @@
 -module(routy).
 
--export([start/1, stop/1, get_status/1]).
+-export([start/2, stop/1, get_status/1]).
 
-start(Name) ->
-	register(Name, spawn(fun() -> init(Name) end)).
+start(Reg,Name) ->
+	register(Reg, spawn(fun() -> init(Name) end)).
 
 stop(Node) ->
 	Node ! stop,
