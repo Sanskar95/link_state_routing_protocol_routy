@@ -10,7 +10,7 @@ update(Node, Links, Map) ->
 	{_, _} ->
 	    lists:keyreplace(Node, 1, Map, {Node, Links});
 	false ->
-	    [{Node, Links} | Map]
+        lists:append({Node, Links}, Map)
     end.
 
 
@@ -22,16 +22,13 @@ reachable(Node, Map) ->
 	    []
     end.
 
-%% all_nodes(Map) ->
-%%     lists:umerge(lists:flatten(Map)).
-
 all_nodes(Map) ->
-    all_nodes_helper(Map, []).
+    all_nodes_util(Map, []).
 
-all_nodes_helper([], Nodes) ->
+all_nodes_util([], Nodes) ->
     lists:usort(Nodes);
-all_nodes_helper([{Node, Links} | Rest], Nodes) ->
+all_nodes_util([{Node, Links} | Rest], Nodes) ->
     TmpNodes = [Node | Nodes],
-    TmpNodes2 = lists:foldl(fun(X, Acc) -> [X | Acc] end, TmpNodes, Links),
-    all_nodes_helper(Rest, TmpNodes2).
+    TmpNodes2 = lists:foldl(fun(X, Acc) -> lists:append(X, Acc) end, TmpNodes, Links),
+    all_nodes_util(Rest, TmpNodes2).
 

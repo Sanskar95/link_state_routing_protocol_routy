@@ -1,5 +1,5 @@
 -module(test).
--export([start/0, stop/0, get_all_statuses/0]).
+-export([start/0, stop/0, get_all_statuses/0,broadcast_update/0]).
 
 processList()->[r1,r2,r3,r4, r5, r6].
 start()->
